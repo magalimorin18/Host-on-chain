@@ -1,10 +1,11 @@
-import "../styles/globals.scss";
-import type { AppProps } from "next/app";
-import { useState } from "react";
+import '../styles/globals.scss';
+import '../styles/tailwind.css';
+import type { AppProps } from 'next/app';
+import { useState } from 'react';
 
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { UserContext } from "../contexts/UserContext";
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { UserContext } from '../contexts/UserContext';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState(null);
@@ -13,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <UserContext.Provider value={[user, setUser]}>
         <Header />
-        <div className="relative min-h-[calc(100vh-109px)]">
+        <div className="h-full">
           <Component {...pageProps} />
         </div>
         <Footer />
