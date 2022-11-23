@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 interface UserContext {
-  address: string | null;
+  accountAddress: string | null;
 }
 
 export const UserContext = createContext<[UserContext | null, any]>([
