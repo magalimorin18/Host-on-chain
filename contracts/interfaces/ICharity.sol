@@ -7,9 +7,15 @@ interface ICharity {
 
     event SentDonation(address indexed organization, uint256 donationAmount);
 
+    event SetCharityNFTAddress(address indexed nftAddress);
+
     error InvalidDonationAmount();
 
     error EmptyDonationPool();
+
+    error ZeroAddress();
+
+    
 
     function donate() payable external;
 

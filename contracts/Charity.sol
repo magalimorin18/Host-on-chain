@@ -3,19 +3,30 @@ pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/ICharity.sol";
+import "./interfaces/ICharityNFT.sol";
 
 /// @notice Charity contract that is implemented ICharity interface functionality
 contract Charity is ICharity, Ownable {
 
+    ICharityNFT public charityNFT;
+
+    string private nftURI;
+
     /// @notice 
-    mapping(address => uint256) donationBalances;
+    mapping(address => uint256) public donationBalances;
 
     uint256 public totalDonationPool;
 
-    constructor () {}
+    constructor (address _charityNFT) {
+        _setNFTAddress(_charityNFT);
+    }
+
+    function setNFTAddress(address _charityNFT) external onlyOwner {
+        _setNFTAddress(_charityNFT);
+    }
 
     function sendDonation(address organization, uint256 donationAmount) payable external override onlyOwner {
-        // check organization address
+        if(organization == address(0)) revert ZeroAddress();
         if(donationAmount == 0) revert InvalidDonationAmount();
         if(totalDonationPool == 0) revert EmptyDonationPool(); 
         
@@ -33,7 +44,17 @@ contract Charity is ICharity, Ownable {
         donationBalances[msg.sender] += msg.value;
         totalDonationPool += msg.value;
 
+        charityNFT.mintNFT(msg.sender, nftURI);
+
         emit CreatedDonate(msg.sender, msg.value);
+    }
+
+    function _setNFTAddress(address _charityNFT) private {
+         if(_charityNFT == address(0)) revert ZeroAddress();
+
+        charityNFT = ICharityNFT(_charityNFT);
+
+        emit SetCharityNFTAddress(_charityNFT);
     }
 
     receive() external payable {
