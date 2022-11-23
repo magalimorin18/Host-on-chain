@@ -4,7 +4,6 @@ import { getDefaultProvider } from "ethers";
 import type { AppProps } from "next/app";
 import { WagmiConfig, createClient } from "wagmi";
 
-import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 const client = createClient({
@@ -20,7 +19,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className="h-screen">
           <Component {...pageProps} />
         </div>
-        <Footer />
       </WagmiConfig>
     </>
   );
