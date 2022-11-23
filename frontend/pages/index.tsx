@@ -20,7 +20,7 @@ export default function Home() {
         itaque cum officiis maiores. Dicta laborum esse inventore saepe quo
         dignissimos accusamus.
       </p>
-      <Button title="Login to Donate" onClick={() => connect()} />;
+      <Button title="Login to Donate" onClick={() => connect()} />
     </div>
   );
 }
