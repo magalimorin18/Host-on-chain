@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { useContext } from "react";
+import { useAccount } from "wagmi";
 
-import { UserContext } from "../../contexts/UserContext";
 import Logout from "./components/Logout/Logout";
 
 const Header: React.FC = () => {
-  const [user] = useContext(UserContext);
+  const { address } = useAccount();
 
   return (
     <header className="mb-5">
@@ -16,7 +15,7 @@ const Header: React.FC = () => {
               HOST ON CHAIN
             </span>
           </Link>
-          <div className="flex items-center">{user && <Logout />}</div>
+          <div className="flex items-center">{address && <Logout />}</div>
         </div>
       </nav>
     </header>

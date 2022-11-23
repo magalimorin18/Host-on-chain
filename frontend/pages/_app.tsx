@@ -1,24 +1,27 @@
 import "../styles/globals.scss";
 import "../styles/tailwind.css";
+import { getDefaultProvider } from "ethers";
 import type { AppProps } from "next/app";
-import { useState } from "react";
+import { WagmiConfig, createClient } from "wagmi";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { UserContext } from "../contexts/UserContext";
+
+const client = createClient({
+  autoConnect: true,
+  provider: getDefaultProvider(),
+});
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [user, setUser] = useState(null);
-
   return (
     <>
-      <UserContext.Provider value={[user, setUser]}>
+      <WagmiConfig client={client}>
         <Header />
         <div className="h-screen">
           <Component {...pageProps} />
         </div>
         <Footer />
-      </UserContext.Provider>
+      </WagmiConfig>
     </>
   );
 }

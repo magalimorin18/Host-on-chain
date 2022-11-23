@@ -1,16 +1,10 @@
-import { useContext } from "react";
+import { useDisconnect } from "wagmi";
 
-import { UserContext } from "../../../../contexts/UserContext";
 import Button from "../../../Button";
 
 const Logout: React.FC = () => {
-  const [, setUser] = useContext(UserContext);
-
-  const logoutUser = () => {
-    setUser(null);
-  };
-
-  return <Button title="Logout" onClick={logoutUser} />;
+  const { disconnect } = useDisconnect();
+  return <Button title="Logout" onClick={() => disconnect()} />;
 };
 
 export default Logout;

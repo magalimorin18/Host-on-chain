@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
-import { UserContext } from "../../contexts/UserContext";
 import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
@@ -16,11 +15,10 @@ interface Room {
 }
 
 const Room: React.FC = () => {
-  const [user] = useContext(UserContext);
-  const [donation, setDonation] = useState(0);
+  const [, setDonation] = useState(0);
 
   const handleDonate = () => {
-    console.log("clicked on donate");
+    // console.log("clicked on donate");
   };
 
   const room: Room = {

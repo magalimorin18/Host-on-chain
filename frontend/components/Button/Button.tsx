@@ -15,7 +15,7 @@ const Button: React.FC<Props> = ({ title, onClick, style }) => {
 
   return (
     <button
-      className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent"
+      className="text-lg px-8 py-4 text-black-800 font-semibold rounded-full border border-purple-200  hover:bg-purple-100 hover:border-transparent "
       type="button"
       onClick={onClick}
     >
