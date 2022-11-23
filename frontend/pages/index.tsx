@@ -2,6 +2,7 @@ import { MetaMaskInpageProvider } from "@metamask/providers";
 import { useEffect, useState } from "react";
 
 import Button from "../components/Button";
+import Room from "../components/Room";
 
 declare global {
   interface Window {
@@ -39,20 +40,22 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center place-content-center text-center">
       <h1 className="text-6xl font-medium m-10">Host On Chain.</h1>
-      <p className="text-2xl m-8 p-2">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad iste,
-        asperiores voluptas molestias quos sed, commodi reprehenderit quod
-        itaque cum officiis maiores. Dicta laborum esse inventore saepe quo
-        dignissimos accusamus.
-      </p>
       {!user ? (
-        <Button
-          title="Donate Now"
-          onClick={() => connectMetamaskWallet()}
-          style="text-lg px-8 py-4 text-black-800 font-semibold rounded-full border border-purple-200  hover:bg-purple-100 hover:border-transparent "
-        />
+        <div>
+          <p className="text-2xl m-8 p-2">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad iste,
+            asperiores voluptas molestias quos sed, commodi reprehenderit quod
+            itaque cum officiis maiores. Dicta laborum esse inventore saepe quo
+            dignissimos accusamus.
+          </p>
+          <Button
+            title="Donate Now"
+            onClick={() => connectMetamaskWallet()}
+            style="text-lg px-8 py-4 text-black-800 font-semibold rounded-full border border-purple-200  hover:bg-purple-100 hover:border-transparent "
+          />
+        </div>
       ) : (
-        <p>You are logged in with the address {user}</p>
+        <Room />
       )}
     </div>
   );

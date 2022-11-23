@@ -1,11 +1,9 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { Input } from "postcss";
 import { useContext, useState } from "react";
 
-import Button from "../components/Button";
-import Label from "../components/Label";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
+import Button from "../Button";
+import Input from "../Input";
+import Label from "../Label";
 
 interface Room {
   id: number;
@@ -17,14 +15,9 @@ interface Room {
   address: string;
 }
 
-const Donate: NextPage = () => {
+const Room: React.FC = () => {
   const [user] = useContext(UserContext);
-  const router = useRouter();
   const [donation, setDonation] = useState(0);
-
-  const handleLogin = () => {
-    router.push("/");
-  };
 
   const handleDonate = () => {
     console.log("clicked on donate");
@@ -39,19 +32,6 @@ const Donate: NextPage = () => {
     image: "/images/room.jpg",
     address: "Berlin, Gerrmany",
   };
-
-  //   if (!user) {
-  //     return (
-  //       <div className="flex items-center flex-col">
-  //         <p>Error: You need to be logged in to be able to donate</p>
-  //         <Button
-  //           title={"Click here to be redirected to Login page"}
-  //           onClick={handleLogin}
-  //         />
-  //       </div>
-  //     );
-  //   }
-
   return (
     <div className="flex justify-center">
       <div className="block rounded-lg shadow-lg bg-white max-w-sm text-center">
@@ -64,21 +44,21 @@ const Donate: NextPage = () => {
           <p className="text-gray-700 text-base">{room.description}</p>
           <div className="p-5">
             <p className="italic text-center rounded-md">
-              Price : {room.price}
+              Targetted Amount : {room.price}
             </p>
             <p className="italic text-center rounded-md">
-              Already donated : {room.balance}
+              Amount collected : {room.balance}
             </p>
           </div>
 
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
-              <Label label={"Profile Name"} />
+              <Label label={"Donation in €"} />
             </div>
             <div className="md:w-2/3">
               <Input
                 onChange={(e) => {
-                  setDonation(e.target.value);
+                  setDonation(parseInt(e.target.value));
                 }}
               />
             </div>
@@ -91,4 +71,4 @@ const Donate: NextPage = () => {
   );
 };
 
-export default Donate;
+export default Room;
