@@ -1,8 +1,12 @@
 import { useState } from "react";
 
-import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
+import Sendtransaction from "../SendTransaction";
+
+interface Props {
+  address: string;
+}
 
 interface Room {
   id: number;
@@ -14,12 +18,8 @@ interface Room {
   address: string;
 }
 
-const Room: React.FC = () => {
-  const [, setDonation] = useState(0);
-
-  const handleDonate = () => {
-    // console.log("clicked on donate");
-  };
+const Room: React.FC<Props> = ({ address }) => {
+  const [donationAmount, setDonationAmount] = useState(0);
 
   const room: Room = {
     id: 1,
@@ -51,18 +51,17 @@ const Room: React.FC = () => {
 
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
-              <Label label={"Donation in €"} />
+              <Label label={"Donation €"} />
             </div>
             <div className="md:w-2/3">
               <Input
                 onChange={(e) => {
-                  setDonation(parseInt(e.target.value));
+                  setDonationAmount(parseInt(e.target.value));
                 }}
               />
             </div>
           </div>
-
-          <Button title={"Donate"} onClick={handleDonate} />
+          <Sendtransaction donationAmount={donationAmount} address={address} />
         </div>
       </div>
     </div>

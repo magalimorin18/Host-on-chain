@@ -1,16 +1,39 @@
-import { useAccount, useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useEffect, useState } from "react";
 
 import Button from "../components/Button";
 import Room from "../components/Room";
 
 export default function Home() {
-  const { address } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const [address, setAddress] = useState("");
+  const [, setIsMetamaskInstalled] = useState<boolean>(false);
 
-  if (address) return <Room />;
+  useEffect(() => {
+    if (window.ethereum) {
+      setIsMetamaskInstalled(true);
+    }
+  }, []);
+
+  async function connectMetamaskWallet(): Promise<void> {
+    (window as any).ethereum
+      .request({
+        method: "eth_requestAccounts",
+      })
+      .then((accounts: string[]) => {
+        const accountAddress = accounts[0];
+        if (accountAddress) {
+          setAddress(accountAddress);
+        }
+      })
+      .catch((error: any) => {
+        alert(`Something went wrong: ${error}`);
+      });
+  }
+
+  const handleLogin = () => {
+    connectMetamaskWallet();
+  };
+
+  if (address) return <Room address={address} />;
   return (
     <div className="flex flex-col justify-center items-center place-content-center text-center">
       <h1 className="text-6xl font-medium m-10">Host On Chain.</h1>
@@ -20,7 +43,7 @@ export default function Home() {
         itaque cum officiis maiores. Dicta laborum esse inventore saepe quo
         dignissimos accusamus.
       </p>
-      <Button title="Login to Donate" onClick={() => connect()} />
+      <Button title="Login to be able to donate" onClick={handleLogin} />
     </div>
   );
 }
