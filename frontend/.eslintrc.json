@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["prettier", "@typescript-eslint"],
+  "rules": {
+    "prettier/prettier": "error",
+    //TYPESCRIPT
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "vars": "all", "args": "all" }
+    ],
+    // NEXT
+    "@next/next/no-img-element": "off",
+    // REACT
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unescaped-entities": "off",
+    // OTHER
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "import/order": [
+      "error",
+      {
+        "groups": [["external", "internal"]],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc" }
+      }
+    ]
+  }
+}
