@@ -13,6 +13,11 @@ interface ICharity {
         bool isUnAvailableDonate;
     }
 
+    struct AccommodationInfo {
+        uint256 requestedDonation;
+        uint256 currentDonation;
+    }
+
     /// @notice emmited wher dination is addres by user
     /// @param user - 
     /// @param donationAmount -
@@ -27,8 +32,10 @@ interface ICharity {
     /// @param nftAddress - address of the nft token
     event SetCharityNFTAddress(address indexed nftAddress);
 
+    event CreatedAccommodationRequest(uint256 indexed accommodationId, uint256 requestedCost);
+
     /// @notice 
-    error InvalidDonationAmount();
+    error InvalidDonation();
 
     /// @notice 
     error EmptyDonationPool();
@@ -39,8 +46,19 @@ interface ICharity {
     /// @notice
     error NoAvailableNFT();
 
+    /// @notice
+    error InvalidTransaction();
+
+    /// @notice
+    error InvalidAccommodationId();
+
+    /// @notice
+    error InvalidRequestedAccommodationCost();
+
+    function addAccommadation(uint256 accommodationId, uint256 cost) external;
+
     /// @notice 
-    function donate() payable external;
+    function donate(uint256 accommodationId) payable external;
 
     /// @notice
     function sendDonation(address organization, uint256 donationAmount) payable external;

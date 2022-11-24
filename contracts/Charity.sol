@@ -11,8 +11,10 @@ contract Charity is ICharity, Ownable {
     ICharityNFT public charityNFT;
     /// @notice uri to mint a NFT token
     string private nftURI;
-    /// @notice setted user's address to his/her donation balance and is available nft token to collect it
-    mapping(address => UserDonations) public userDonationsInfo;
+    /// @notice setted accommodation to user's address to his/her donation balance and is available nft token to collect it
+    mapping(uint256 => mapping(address => UserDonations)) public userDonationsInfo;
+    /// @notice setted accommodationId to accommodation needed and current amount
+    mapping(uint256 => AccommodationInfo) public accommodationCost;
     /// @notice pool will all donations amount
     uint256 public totalDonationPool;
 
@@ -27,9 +29,20 @@ contract Charity is ICharity, Ownable {
         _setNFTAddress(_charityNFT, _nftURI);
     }
 
+    function addAccommadation(uint256 accommodationId, uint256 cost) external override {
+        if(accommodationId == 0) revert InvalidAccommodationId();
+        if(cost == 0) revert InvalidRequestedAccommodationCost(); 
+
+        AccommodationInfo storage accommodation = accommodationCost[accommodationId];
+
+        accommodation.requestedDonation = cost;
+
+        emit CreatedAccommodationRequest(accommodationId, cost);
+    }
+
     function sendDonation(address organization, uint256 donationAmount) payable external override onlyOwner {
         if(organization == address(0)) revert ZeroAddress();
-        if(donationAmount == 0) revert InvalidDonationAmount();
+        if(donationAmount == 0) revert InvalidDonation();
         if(totalDonationPool == 0) revert EmptyDonationPool(); 
         
         (bool success, ) = organization.call{value: donationAmount}("");
@@ -40,8 +53,9 @@ contract Charity is ICharity, Ownable {
         emit SentDonation(organization, totalDonationPool);
     }
 
-    function collectNFT() external {
-        UserDonations storage userDonation = userDonationsInfo[msg.sender];
+    function collectNFT(uint256 accommodationId) external {
+        if(accommodationId == 0) revert InvalidAccommodationId();
+        UserDonations storage userDonation = userDonationsInfo[accommodationId][msg.sender];
 
         if(!userDonation.isAvailableNFT) revert NoAvailableNFT();
 
@@ -50,15 +64,21 @@ contract Charity is ICharity, Ownable {
         charityNFT.mintNFT(msg.sender, nftURI);
     }
 
-    function donate() payable public override {
-        if(msg.value == 0) revert InvalidDonationAmount();
+    function donate(uint256 accommodationId) payable public override {
+        if(accommodationId == 0) revert InvalidAccommodationId();
+        
+        AccommodationInfo storage accommodation = accommodationCost[accommodationId];
 
-        UserDonations storage userDonation = userDonationsInfo[msg.sender];
+        if(msg.value == 0 || accommodation.currentDonation + msg.value > accommodation.requestedDonation) 
+            revert InvalidDonation();
+
+        UserDonations storage userDonation = userDonationsInfo[accommodationId][msg.sender];
 
         userDonation.donationBalance += msg.value;
         userDonation.isAvailableNFT = true;
         userDonation.isUnAvailableDonate = true;
         totalDonationPool += msg.value;
+        accommodation.currentDonation += msg.value;
 
         emit CreatedDonate(msg.sender, msg.value);
     }
@@ -75,7 +95,7 @@ contract Charity is ICharity, Ownable {
 
     receive() external payable {
         if (msg.sender != address(0)) {
-            donate();
+            revert InvalidTransaction();
         }
     }
 
