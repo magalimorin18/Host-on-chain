@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAccount } from "wagmi";
 
 import Button from "../Button";
 import Input from "../Input";
@@ -16,9 +17,10 @@ interface Room {
 
 const Room: React.FC = () => {
   const [, setDonation] = useState(0);
+  const { address } = useAccount();
 
   const handleDonate = () => {
-    // console.log("clicked on donate");
+    console.log(address);
   };
 
   const room: Room = {
