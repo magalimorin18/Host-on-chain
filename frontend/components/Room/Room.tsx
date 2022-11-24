@@ -20,7 +20,7 @@ const Room: React.FC = () => {
   const { address } = useAccount();
 
   const handleDonate = () => {
-    console.log(address);
+    alert(address);
   };
 
   const room: Room = {
