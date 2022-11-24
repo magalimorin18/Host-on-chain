@@ -29,7 +29,7 @@ contract Charity is ICharity, Ownable {
         _setNFTAddress(_charityNFT, _nftURI);
     }
 
-    function addAccommadation(uint256 accommodationId, uint256 cost) external override {
+    function addAccommodation(uint256 accommodationId, uint256 cost) external override {
         if(accommodationId == 0) revert InvalidAccommodationId();
         if(cost == 0) revert InvalidRequestedAccommodationCost(); 
 

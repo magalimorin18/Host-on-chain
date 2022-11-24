@@ -55,7 +55,7 @@ interface ICharity {
     /// @notice
     error InvalidRequestedAccommodationCost();
 
-    function addAccommadation(uint256 accommodationId, uint256 cost) external;
+    function addAccommodation(uint256 accommodationId, uint256 cost) external;
 
     /// @notice 
     function donate(uint256 accommodationId) payable external;
