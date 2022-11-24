@@ -7,22 +7,24 @@ import "./interfaces/ICharityNFT.sol";
 
 /// @notice Charity contract that is implemented ICharity interface functionality
 contract Charity is ICharity, Ownable {
-
+    /// @notice address of NFT token that will be minted to user as an encouragee
     ICharityNFT public charityNFT;
-
+    /// @notice uri to mint a NFT token
     string private nftURI;
-
-    /// @notice 
-    mapping(address => uint256) public donationBalances;
-
+    /// @notice setted user's address to his/her donation balance and is available nft token to collect it
+    mapping(address => UserDonations) public userDonationsInfo;
+    /// @notice pool will all donations amount
     uint256 public totalDonationPool;
 
-    constructor (address _charityNFT) {
-        _setNFTAddress(_charityNFT);
+    /// @notice constructor
+    /// @param  _charityNFT - 
+    /// @param _nftURI - 
+    constructor (address _charityNFT, string memory _nftURI) {
+        _setNFTAddress(_charityNFT, _nftURI);
     }
 
-    function setNFTAddress(address _charityNFT) external onlyOwner {
-        _setNFTAddress(_charityNFT);
+    function setNFTAddress(address _charityNFT, string memory _nftURI) external onlyOwner {
+        _setNFTAddress(_charityNFT, _nftURI);
     }
 
     function sendDonation(address organization, uint256 donationAmount) payable external override onlyOwner {
@@ -38,21 +40,35 @@ contract Charity is ICharity, Ownable {
         emit SentDonation(organization, totalDonationPool);
     }
 
+    function collectNFT() external {
+        UserDonations storage userDonation = userDonationsInfo[msg.sender];
+
+        if(!userDonation.isAvailableNFT) revert NoAvailableNFT();
+
+        userDonation.isUnAvailableDonate = false;
+
+        charityNFT.mintNFT(msg.sender, nftURI);
+    }
+
     function donate() payable public override {
         if(msg.value == 0) revert InvalidDonationAmount();
 
-        donationBalances[msg.sender] += msg.value;
-        totalDonationPool += msg.value;
+        UserDonations storage userDonation = userDonationsInfo[msg.sender];
 
-        charityNFT.mintNFT(msg.sender, nftURI);
+        userDonation.donationBalance += msg.value;
+        userDonation.isAvailableNFT = true;
+        userDonation.isUnAvailableDonate = true;
+        totalDonationPool += msg.value;
 
         emit CreatedDonate(msg.sender, msg.value);
     }
 
-    function _setNFTAddress(address _charityNFT) private {
+    function _setNFTAddress(address _charityNFT, string memory _nftURI) private {
          if(_charityNFT == address(0)) revert ZeroAddress();
 
         charityNFT = ICharityNFT(_charityNFT);
+
+        nftURI = _nftURI;
 
         emit SetCharityNFTAddress(_charityNFT);
     }

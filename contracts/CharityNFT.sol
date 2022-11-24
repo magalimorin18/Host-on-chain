@@ -13,8 +13,6 @@ contract CharityNFT is ERC721, ERC721URIStorage, ICharityNFT, Ownable  {
 
     Counters.Counter private _tokenIdCounter;
 
-    event MintedNFT(address indexed minter, string tokenURI, uint256 nftId);
-
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
     function mintNFT(address to, string memory nftURI) public override onlyOwner returns(uint256) {
