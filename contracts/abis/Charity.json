@@ -1,0 +1,351 @@
+{
+    "_format": "hh-sol-artifact-1",
+    "contractName": "Charity",
+    "sourceName": "contracts/Charity.sol",
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_charityNFT",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "_nftURI",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [],
+        "name": "EmptyDonationPool",
+        "type": "error"
+      },
+      {
+        "inputs": [],
+        "name": "InvalidAccommodationId",
+        "type": "error"
+      },
+      {
+        "inputs": [],
+        "name": "InvalidDonation",
+        "type": "error"
+      },
+      {
+        "inputs": [],
+        "name": "InvalidRequestedAccommodationCost",
+        "type": "error"
+      },
+      {
+        "inputs": [],
+        "name": "InvalidTransaction",
+        "type": "error"
+      },
+      {
+        "inputs": [],
+        "name": "NoAvailableNFT",
+        "type": "error"
+      },
+      {
+        "inputs": [],
+        "name": "ZeroAddress",
+        "type": "error"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "accommodationId",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "requestedCost",
+            "type": "uint256"
+          }
+        ],
+        "name": "CreatedAccommodationRequest",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "CreatedDonate",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "organization",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "SentDonation",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "nftAddress",
+            "type": "address"
+          }
+        ],
+        "name": "SetCharityNFTAddress",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "accommodationCost",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "requestedDonation",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currentDonation",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "accommodationId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cost",
+            "type": "uint256"
+          }
+        ],
+        "name": "addAccommadation",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "charityNFT",
+        "outputs": [
+          {
+            "internalType": "contract ICharityNFT",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "accommodationId",
+            "type": "uint256"
+          }
+        ],
+        "name": "collectNFT",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "accommodationId",
+            "type": "uint256"
+          }
+        ],
+        "name": "donate",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "organization",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donationAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "sendDonation",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_charityNFT",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "_nftURI",
+            "type": "string"
+          }
+        ],
+        "name": "setNFTAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "totalDonationPool",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "userDonationsInfo",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "donationBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isAvailableNFT",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isUnAvailableDonate",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "stateMutability": "payable",
+        "type": "receive"
+      }
+    ],
+    "linkReferences": {},
+    "deployedLinkReferences": {}
+  }
+  
