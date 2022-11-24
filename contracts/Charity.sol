@@ -94,9 +94,7 @@ contract Charity is ICharity, Ownable {
     }
 
     receive() external payable {
-        if (msg.sender != address(0)) {
-            revert InvalidTransaction();
-        }
+        totalDonationPool += msg.value;
     }
 
 }

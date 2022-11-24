@@ -18,7 +18,7 @@ contract CharityNFT is ERC721, ERC721URIStorage, ICharityNFT, Ownable  {
     function mintNFT(address to, string memory nftURI) public override onlyOwner returns(uint256) {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _mint(to, tokenId);
         _setTokenURI(tokenId, nftURI);
 
         emit MintedNFT(msg.sender, nftURI, tokenId);
