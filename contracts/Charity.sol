@@ -98,5 +98,4 @@ contract Charity is ICharity, Ownable {
             revert InvalidTransaction();
         }
     }
-
 }
