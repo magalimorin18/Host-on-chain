@@ -61,6 +61,7 @@ contract Charity is ICharity, Ownable {
 
         userDonation.isUnAvailableDonate = false;
 
+        /// only if user is donated if has the possibility to mint a token
         charityNFT.mintNFT(msg.sender, nftURI);
     }
 
