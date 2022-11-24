@@ -15,7 +15,7 @@ const Header: React.FC = () => {
               host on chain
             </span>
           </Link>
-          <div className="flex items-center">{address && <Logout />}</div>
+          <div className="flex">{address && <Logout />}</div>
         </div>
       </nav>
     </header>
